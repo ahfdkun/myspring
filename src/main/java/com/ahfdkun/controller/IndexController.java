@@ -1,4 +1,4 @@
-package com.ahfdkun;
+package com.ahfdkun.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

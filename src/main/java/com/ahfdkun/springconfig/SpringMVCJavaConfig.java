@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.ahfdkun.IndexController;
+import com.ahfdkun.controller.IndexController;
 
 @Configuration
 @ComponentScan(basePackageClasses = IndexController.class, includeFilters=@Filter(Controller.class))
