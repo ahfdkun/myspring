@@ -21,9 +21,14 @@ public class WebProjectConfigInitializer implements WebApplicationInitializer {
 	}
 
 	private void initializeSpringConfig(ServletContext container) {
+		// tomcat can set configuration
+		// container.setInitParameter("spring.profiles.active", "dev");
+		// container.setInitParameter("spring.profiles.default", "dev");
+		
 		// Create the 'root' Spring application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(SpringJavaConfig.class);
+		
 		// Manage the lifecycle of the root application context
 		container.addListener(new ContextLoaderListener(rootContext));
 
@@ -38,6 +43,7 @@ public class WebProjectConfigInitializer implements WebApplicationInitializer {
 	private void initializeSpringMVCConfig(ServletContext container) {
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
 		dispatcherContext.register(SpringMVCJavaConfig.class);
+		
 		// Register and map the spring rest servlet
 		ServletRegistration.Dynamic dispatcher = container.addServlet("SpringMVC", new DispatcherServlet(dispatcherContext));
 		dispatcher.setLoadOnStartup(1);

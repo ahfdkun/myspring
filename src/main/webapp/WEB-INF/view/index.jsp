@@ -2,7 +2,10 @@
 <html>
 <body>
 	<h2>Hello World!</h2>
-	<h2>${user}</h2>
-	<h2>${name}</h2>
+	<h2>user: ${user}</h2>
+	<h2>name: ${name}</h2>
+	<h2>hashmap: ${hashmap}</h2>
+	<h2>hashmap1: ${hashmap1}</h2>
+	systemProperties: ${systemProperties}
 </body>
 </html>

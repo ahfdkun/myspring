@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -30,4 +31,13 @@ public class SpringJavaConfig {
 		map.put("profile", "prod");
 		return map;
 	}
+	
+	@Bean(name="hashmap1")
+	@Conditional(MagicExistsCondition.class)
+	public HashMap<String, String> hashmap1() {
+		HashMap<String,String> map = new HashMap<>();
+		map.put("condition", "hashmap1");
+		return map;
+	}
+	
 }

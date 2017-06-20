@@ -70,7 +70,7 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
-					<warName>${env}-${project.artifactId}-${project.version}</warName>
+					<warName>${project.artifactId}</warName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -118,6 +118,9 @@
 					<uriEncoding>UTF-8</uriEncoding>
 					<finalName>${project.artifactId}</finalName>
 					<server>tomcat7</server>
+					<systemProperties>
+						<spring.condition>prod</spring.condition>
+					</systemProperties>
 				</configuration>
 			</plugin>
 		</plugins>
