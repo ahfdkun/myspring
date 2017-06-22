@@ -1,4 +1,4 @@
-package com.ahfdkun.service;
+package com.ahfdkun.domain;
 
 public class NotePad {
 

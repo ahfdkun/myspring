@@ -8,15 +8,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.ahfdkun.domain.NotePad;
+import com.ahfdkun.domain.ShoppingCart;
 import com.ahfdkun.service.MyService;
-import com.ahfdkun.service.NotePad;
 
 @Configuration
 @ComponentScan(basePackageClasses = MyService.class, excludeFilters = @Filter(Controller.class))
+@ImportResource("classpath:spring/spring-core.xml")
 public class SpringJavaConfig {
 
 	@Bean(name = "hashmap")
@@ -48,4 +53,11 @@ public class SpringJavaConfig {
 	public NotePad notepad() {
 		return new NotePad();
 	}
+	
+	@Bean
+	@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	public ShoppingCart cart() {
+		return new ShoppingCart();
+	}
+		
 }
