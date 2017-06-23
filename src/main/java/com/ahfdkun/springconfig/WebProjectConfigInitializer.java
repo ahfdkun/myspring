@@ -11,6 +11,11 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.util.Log4jConfigListener;
 
+/**
+ * Java Spring配置
+ * @author Administrator
+ *
+ */
 public class WebProjectConfigInitializer implements WebApplicationInitializer {
 
 	@Override
