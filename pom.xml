@@ -118,6 +118,7 @@
 					<uriEncoding>UTF-8</uriEncoding>
 					<finalName>${project.artifactId}</finalName>
 					<server>tomcat7</server>
+					<!-- 设置系统属性 -->
 					<systemProperties>
 						<spring.condition>prod</spring.condition>
 					</systemProperties>
