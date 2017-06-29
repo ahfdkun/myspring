@@ -16,13 +16,13 @@ import org.springframework.web.util.Log4jConfigListener;
  * @author Administrator
  *
  */
-public class WebProjectConfigInitializer implements WebApplicationInitializer {
+public class ProjectConfigInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 		initializeSpringConfig(container);
 		initializeLog4jConfig(container);
-		initializeSpringMVCConfig(container);
+		// initializeSpringMVCConfig(container);
 	}
 
 	private void initializeSpringConfig(ServletContext container) {
