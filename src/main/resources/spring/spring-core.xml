@@ -10,5 +10,19 @@
 		<!-- 使用cglib代理 -->
 		<aop:scoped-proxy proxy-target-class="true"/>
 	</bean>
+	
+	<!-- XML AOP -->
+	<bean id="testXMLAdvice" class="com.ahfdkun.aop.TestXMLAdvice" />
+	
+	<bean class="com.ahfdkun.service.impl.TestPointImpl" />
 
+	<aop:config>
+		<aop:advisor advice-ref="testXMLAdvice" pointcut="execution(* com.ahfdkun.service.TestPoint.*(..))" />
+		<!-- XML 增强类方法 -->
+		<!-- <aop:aspect>
+			<aop:declare-parents types-matching="com.ahfdkun.service.Performance+"
+				implement-interface="com.ahfdkun.service.Encoreable" default-impl="com.ahfdkun.service.impl.DefaultEncoreable" />
+		</aop:aspect> -->
+	</aop:config>
+	
 </beans>
