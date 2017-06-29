@@ -1,0 +1,47 @@
+package com.ahfdkun.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ahfdkun.constant.SpittleConstant;
+import com.ahfdkun.domain.Spittle;
+import com.ahfdkun.repository.SpittleRespository;
+
+@Controller
+@RequestMapping("/spittles")
+public class SpittleController {
+
+	private final SpittleRespository spittleRespository;
+	
+	@Autowired
+	public SpittleController(SpittleRespository spittleRespository) {
+		this.spittleRespository = spittleRespository;
+	}
+
+	/*@RequestMapping(method = RequestMethod.GET)
+	public Map<String, Object> spittles() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("spittleList", spittleRespository.findSpittles(Long.MAX_VALUE, 20));
+		map.put("username", "zhaoyakun");
+		return map;
+	}*/
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = SpittleConstant.MAX_LONG_AS_STRING) long max,
+			@RequestParam(value = "count", defaultValue = "20") int count) {
+		return spittleRespository.findSpittles(max, count);
+	}
+	
+	@RequestMapping(value="/show", method = RequestMethod.GET)
+	public String showSpittle(@RequestParam(value = "spittle_id") long spittleId, Model model) {
+		model.addAttribute(spittleRespository.findOne(spittleId));
+		return "spittle";
+	}
+	
+}
