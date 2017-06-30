@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceView;
 
 import com.ahfdkun.controller.SpittleController;
+import com.ahfdkun.domain.Spitter;
 import com.ahfdkun.domain.Spittle;
 import com.ahfdkun.repository.SpittleRespository;
 
@@ -75,6 +77,22 @@ public class SpittleControllerTest2 {
 
 	private Spittle createSpittle(long spittleId) {
 		return new Spittle("test Spittle", new Date());
+	}
+	
+	@Test
+	public void testSpittle2() throws Exception {
+		long spittleId = 1;
+		Spittle expectedSpittle = createSpittle(spittleId);
+		SpittleRespository mockRepository = mock(SpittleRespository.class);
+		when(mockRepository.findOne(spittleId)).thenReturn(expectedSpittle);
+		
+		SpittleController controller = new SpittleController(mockRepository);
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).setSingleView(new InternalResourceView("/WEB-INF/view/spittle.jsp")).build();
+		mockMvc.perform(get("/spittles/1"))
+			.andExpect(view().name("spittle"))
+			.andExpect(model().attributeExists("spittle"))
+			.andExpect(model().attribute("spittle", expectedSpittle));
 	}
 	
 }
