@@ -65,4 +65,21 @@ public class SpitterControllerTest {
 			.andExpect(view().name("profile"));
 	}
 	
+	@Test
+	public void processRegistrationNullUsername() throws Exception {
+		SpitterRespository mockRepository = mock(SpitterRespository.class);
+		SpitterController controller = new SpitterController(mockRepository);
+		
+		Spitter unsaved = new Spitter(null, "123456", "Yakun", "Zhao");
+		Spitter saved = new Spitter(24L, null, "123456", "Yakun", "Zhao");
+		when(mockRepository.save(unsaved)).thenReturn(saved);
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		mockMvc.perform(post("/spitter/register")
+				.param("firstName", "Yakun")
+				.param("lastName", "Zhao")
+				.param("password", "123456"))
+			.andExpect(redirectedUrl("/spitter/null"));
+	}
+	
 }

@@ -1,5 +1,5 @@
 package com.ahfdkun;
 
-public class JavaConfigFlag {
+public final class JavaConfigFlag {
 
 }

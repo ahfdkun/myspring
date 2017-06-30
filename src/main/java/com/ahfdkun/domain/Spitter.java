@@ -1,18 +1,40 @@
 package com.ahfdkun.domain;
 
+import java.io.Serializable;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
-public class Spitter {
+public class Spitter implements Serializable {
+
+	private static final long serialVersionUID = 8298232270480484615L;
 
 	private Long id;
+	
+	@NotNull
+	@Size(min=5, max=16, message="{username.size}")
 	private String username;
+	
+	@NotNull
+	@Size(min=5, max=25)
+	@Pattern(regexp = "\\w{10,20}", message="正则匹配不正确")
 	private String password;
+	
+	@NotNull
+	@Size(min=2, max=30, message="{firstName.size}")
 	private String firstName;
+	
+	@NotNull
+	@Size(min=2, max=30)
 	private String lastName;
 
-	public Spitter() {
-	}
+	public Spitter() {}
 
 	public Spitter(Long id, String username, String password, String firstName, String lastName) {
 		this.id = id;
