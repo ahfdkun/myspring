@@ -15,6 +15,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.ahfdkun.controller.IndexController;
 
@@ -25,13 +27,17 @@ import com.ahfdkun.controller.IndexController;
 public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
-	public ViewResolver viewResolver() { // 配置JSP视图解析器
-        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
+	public ViewResolver viewResolver() {
+		// 配置JSP视图解析器
+        /*InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
         resourceViewResolver.setPrefix("/WEB-INF/view/");
         resourceViewResolver.setSuffix(".jsp");
         resourceViewResolver.setViewClass(JstlView.class);
         resourceViewResolver.setExposeContextBeansAsAttributes(true); // 设置Spring上下文bean是否在页面显示
-        return resourceViewResolver;
+        return resourceViewResolver;*/
+        
+        // 配置Apache Tiles视图解析器
+        return new TilesViewResolver();
     }
 	
 	@Bean
@@ -41,6 +47,14 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 		return messageSource;
 	}
 	
+	@Bean
+	public TilesConfigurer tilesConfigurer() { // 指定Tiles定义的位置
+		TilesConfigurer tiles = new TilesConfigurer();
+		tiles.setDefinitions("/WEB-INF/layout/tiles.xml");
+		tiles.setCheckRefresh(true); // 启动刷新功能
+		return tiles;
+	}
+	
 	// 配置静态资源的处理
 	// 等同于 <mvc:default-servlet-handler />
 	@Override
@@ -48,6 +62,7 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
+	// 验证器
 	@Override
 	public Validator getValidator() {
 		return new CustomValidatorBean();
