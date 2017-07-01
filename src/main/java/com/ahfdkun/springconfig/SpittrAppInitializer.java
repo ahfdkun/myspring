@@ -1,5 +1,6 @@
 package com.ahfdkun.springconfig;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -16,7 +17,7 @@ import org.springframework.web.util.Log4jConfigListener;
  * @author Administrator
  *
  */
-public class ProjectConfigInitializer implements WebApplicationInitializer {
+public class SpittrAppInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
@@ -54,6 +55,8 @@ public class ProjectConfigInitializer implements WebApplicationInitializer {
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.setAsyncSupported(true);
 		dispatcher.addMapping("/");
+		// 支持multipart
+		dispatcher.setMultipartConfig(new MultipartConfigElement("c:/tmp/spittr/uploads"));
 	}
 
 }
