@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ahfdkun.domain.Spittle;
+import com.ahfdkun.exception.web.DuplicateSpittleException;
 import com.ahfdkun.repository.SpittleRespository;
 
 /**
@@ -30,6 +31,14 @@ public class SpittleRepositoryImpl implements SpittleRespository {
 
 	@Override
 	public Spittle findOne(long spittleId) {
+		return new Spittle("abc", new Date(), 100.0, 200.1);
+	}
+
+	@Override
+	public Spittle save(Spittle spittle) {
+		if (spittle.getId() == null) {
+			throw new DuplicateSpittleException();
+		}
 		return null;
 	}
 
