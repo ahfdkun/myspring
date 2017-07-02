@@ -1,16 +1,19 @@
 package com.ahfdkun.springconfig;
 
+import java.io.IOException;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
 import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -26,6 +29,8 @@ import com.ahfdkun.controller.IndexController;
 // @ImportResource("WEB-INF/spring-servlet.xml")
 public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 
+	public static final String UPLOAD_CHAR_SET = "UTF-8";
+	
 	@Bean
 	public ViewResolver viewResolver() {
 		// 配置JSP视图解析器
@@ -47,8 +52,17 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
     }
 	
 	@Bean
-	public MultipartResolver multipartResolver() { // multipart解析器
-        return new StandardServletMultipartResolver();
+	public MultipartResolver multipartResolver() throws IOException { // multipart解析器
+		// 依赖于servlet3.0
+        // return new StandardServletMultipartResolver();
+		
+		// 使用Jakarta Commons FileUpload
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		commonsMultipartResolver.setUploadTempDir(new FileSystemResource("c:/tmp/spittr/uploads"));
+		commonsMultipartResolver.setDefaultEncoding(UPLOAD_CHAR_SET);
+		commonsMultipartResolver.setMaxUploadSize(2097152);
+		commonsMultipartResolver.setMaxInMemorySize(0);
+        return commonsMultipartResolver; 
     }
 	
 	@Bean
