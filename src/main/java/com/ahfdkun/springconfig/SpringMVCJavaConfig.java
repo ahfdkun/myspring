@@ -1,20 +1,25 @@
 package com.ahfdkun.springconfig;
 
+import java.io.IOException;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.ahfdkun.controller.IndexController;
 
@@ -24,21 +29,61 @@ import com.ahfdkun.controller.IndexController;
 // @ImportResource("WEB-INF/spring-servlet.xml")
 public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 
+	public static final String UPLOAD_CHAR_SET = "UTF-8";
+	
 	@Bean
-	public ViewResolver viewResolver() { // 配置JSP视图解析器
-        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
+	public ViewResolver viewResolver() {
+		// 配置JSP视图解析器
+        /*InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
         resourceViewResolver.setPrefix("/WEB-INF/view/");
         resourceViewResolver.setSuffix(".jsp");
         resourceViewResolver.setViewClass(JstlView.class);
         resourceViewResolver.setExposeContextBeansAsAttributes(true); // 设置Spring上下文bean是否在页面显示
-        return resourceViewResolver;
+        return resourceViewResolver;*/
+        
+        // 配置Apache Tiles视图解析器
+        return new TilesViewResolver();
+        
+        // Thymeleaf视图解析器
+        /*ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");
+        return resolver;*/
+    }
+	
+	@Bean
+	public MultipartResolver multipartResolver() throws IOException { // multipart解析器
+		// 依赖于servlet3.0
+        // return new StandardServletMultipartResolver();
+		
+		// 使用Jakarta Commons FileUpload
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		commonsMultipartResolver.setUploadTempDir(new FileSystemResource("c:/tmp/spittr/uploads"));
+		commonsMultipartResolver.setDefaultEncoding(UPLOAD_CHAR_SET);
+		commonsMultipartResolver.setMaxUploadSize(2097152);
+		commonsMultipartResolver.setMaxInMemorySize(0);
+        return commonsMultipartResolver; 
     }
 	
 	@Bean
 	public MessageSource messageSource() { // 国际化使用
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		/*ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
+		return messageSource;*/
+		
+		// 动态刷新信息源
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:messages");
+		messageSource.setCacheSeconds(10);
 		return messageSource;
+	}
+	
+	@Bean
+	public TilesConfigurer tilesConfigurer() { // 指定Tiles定义的位置
+		TilesConfigurer tiles = new TilesConfigurer();
+		tiles.setDefinitions("/WEB-INF/layout/tiles.xml");
+		tiles.setCheckRefresh(true); // 启动刷新功能
+		return tiles;
 	}
 	
 	// 配置静态资源的处理
@@ -48,6 +93,7 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
+	// 验证器
 	@Override
 	public Validator getValidator() {
 		return new CustomValidatorBean();

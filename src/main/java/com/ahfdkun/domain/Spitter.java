@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 public class Spitter implements Serializable {
 
@@ -23,7 +21,7 @@ public class Spitter implements Serializable {
 	
 	@NotNull
 	@Size(min=5, max=25)
-	@Pattern(regexp = "\\w{10,20}", message="正则匹配不正确")
+	@Pattern(regexp = "\\w{5,25}", message="正则匹配不正确")
 	private String password;
 	
 	@NotNull
@@ -33,7 +31,7 @@ public class Spitter implements Serializable {
 	@NotNull
 	@Size(min=2, max=30)
 	private String lastName;
-
+	
 	public Spitter() {}
 
 	public Spitter(Long id, String username, String password, String firstName, String lastName) {

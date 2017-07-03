@@ -13,12 +13,13 @@
 </head>
 <body>
 	<h1>Register</h1>
-	<sf:form method="POST" commandName="spitter">
+	<sf:form method="POST" commandName="spitter" enctype="multipart/form-data">
 	   <%-- <sf:errors path="*" element="div" cssClass="error" /> --%>
 	   <sf:label path="firstName" cssErrorClass="error">First Name: </sf:label><sf:input path="firstName" cssErrorClass="error"/><sf:errors path="firstName" element="span" cssClass="error" /><br/>
 	   Last Name: <sf:input path="lastName" /><sf:errors path="lastName" element="span" cssClass="error" /><br/>
 	   Username: <sf:input path="username" /><sf:errors path="username" element="span" cssClass="error" /><br/>
 	   Password: <sf:password path="password" /><sf:errors path="password" element="span" cssClass="error" /><br/>
+	   ProfilePicture: <input type="file" name="profilePicture" accept="image/jpeg,image/png,image/gif" /><br/>
 	   <input type="submit" value="Register" />
 	</sf:form>
     
