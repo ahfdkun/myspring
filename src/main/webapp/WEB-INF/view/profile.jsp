@@ -6,8 +6,8 @@
 </head>
 <body>
 	<h1>Your Profile</h1>
-	${spitter.username} <br/>
-	${spitter.firstName} <br/>
-	${spitter.lastName} <br/>
+	username: ${spitter.username} <br/>
+	firstName: ${spitter.firstName} <br/>
+	lastName: ${spitter.lastName} <br/>
 </body>
 </html>

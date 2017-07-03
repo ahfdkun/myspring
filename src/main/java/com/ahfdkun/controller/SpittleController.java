@@ -4,19 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ahfdkun.constant.SpittleConstant;
 import com.ahfdkun.domain.Spittle;
-import com.ahfdkun.exception.web.DuplicateSpittleException;
 import com.ahfdkun.exception.web.SpittleNotFoundException;
 import com.ahfdkun.repository.SpittleRespository;
 
@@ -64,11 +60,6 @@ public class SpittleController {
 	public String saveSpittle(Spittle spittle, Model model) {
 		spittleRespository.save(new Spittle(null, spittle.getMessage(), new Date(), spittle.getLatitude(), spittle.getLongitude()));
 		return "redirect:/spittles";
-	}
-	
-	@ExceptionHandler(DuplicateSpittleException.class)
-	public String handleDuplicateSpittle() { // 异常处理的方法
-		return "error/duplicate";
 	}
 	
 }

@@ -3,7 +3,6 @@ package com.ahfdkun.controller;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ahfdkun.domain.Spitter;
 import com.ahfdkun.repository.SpitterRespository;
@@ -44,8 +44,8 @@ public class SpitterController {
 	 * @param errors
 	 * @return
 	 */
-	/*@RequestMapping(value="/register", method = RequestMethod.POST)
-	public String processRegistration(@RequestPart("profilePicture") MultipartFile profilePicture, @Valid Spitter spitter, Errors errors) {
+	@RequestMapping(value="/register", method = RequestMethod.POST)
+	public String processRegistration(@RequestPart("profilePicture") MultipartFile profilePicture, @Valid Spitter spitter, Errors errors, RedirectAttributes model) {
 		if (errors.hasErrors()) {
 			return "registerForm";
 		}
@@ -56,8 +56,11 @@ public class SpitterController {
 			e.printStackTrace();
 		}
 		spitterRespository.save(spitter);
-		return "redirect:/spitter/" + spitter.getUsername();
-	}*/
+		
+		model.addAttribute("username", spitter.getUsername());
+		model.addFlashAttribute("spitter", spitter);
+		return "redirect:/spitter/{username}";
+	}
 	
 	/**
 	 * 使用Part接收上传的文件，不需要配置MultipartResolver
@@ -67,7 +70,7 @@ public class SpitterController {
 	 * @param errors
 	 * @return
 	 */
-	@RequestMapping(value="/register", method = RequestMethod.POST)
+	/*@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String processRegistration(@RequestPart("profilePicture") Part profilePicture, @Valid Spitter spitter, Errors errors) {
 		if (errors.hasErrors()) {
 			return "registerForm";
@@ -86,12 +89,13 @@ public class SpitterController {
 		}
 		spitterRespository.save(spitter);
 		return "redirect:/spitter/" + spitter.getUsername();
-	}
+	}*/
 	
 	@RequestMapping(value="/{username}", method = RequestMethod.GET)
 	public String showSpitterProfile(@PathVariable String username, Model model) {
-		Spitter spitter = spitterRespository.findByUsername(username);
-		model.addAttribute(spitter);
+		if (!model.containsAttribute("spitter")) {
+			model.addAttribute(spitterRespository.findByUsername(username));
+		}
 		return "profile";
 	}
 	
