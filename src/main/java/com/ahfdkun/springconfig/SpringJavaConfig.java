@@ -29,7 +29,7 @@ import com.ahfdkun.domain.ShoppingCart;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan(basePackageClasses = JavaConfigFlag.class, excludeFilters = @Filter(Controller.class))
-@ImportResource("classpath:spring/spring-core.xml,spring/spring-flow.xml")
+@ImportResource({ "classpath:spring/spring-core.xml", "classpath:spring/spring-flow.xml" })
 @PropertySources(@PropertySource("classpath:test.properties"))
 public class SpringJavaConfig {
 	
