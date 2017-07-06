@@ -18,8 +18,9 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.ahfdkun.controller.IndexController;
 
@@ -34,15 +35,15 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver viewResolver() {
 		// 配置JSP视图解析器
-        /*InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
+        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
         resourceViewResolver.setPrefix("/WEB-INF/view/");
         resourceViewResolver.setSuffix(".jsp");
         resourceViewResolver.setViewClass(JstlView.class);
         resourceViewResolver.setExposeContextBeansAsAttributes(true); // 设置Spring上下文bean是否在页面显示
-        return resourceViewResolver;*/
+        return resourceViewResolver;
         
         // 配置Apache Tiles视图解析器
-        return new TilesViewResolver();
+        /*return new TilesViewResolver();*/
         
         // Thymeleaf视图解析器
         /*ThymeleafViewResolver resolver = new ThymeleafViewResolver();
