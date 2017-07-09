@@ -11,6 +11,7 @@
 	<properties>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<spring.version>4.1.0.RELEASE</spring.version>
+		<springsecurity.version>4.1.0.RELEASE</springsecurity.version>
 	</properties>
 
 	<build>
@@ -213,6 +214,16 @@
 	        <artifactId>spring-webflow</artifactId>
 	        <version>2.4.5.RELEASE</version>
 	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-web</artifactId>
+	        <version>${springsecurity.version}</version>
+	    </dependency>
+	    <dependency>  
+            <groupId>org.springframework.security</groupId>  
+            <artifactId>spring-security-config</artifactId>  
+            <version>${springsecurity.version}</version>  
+        </dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
