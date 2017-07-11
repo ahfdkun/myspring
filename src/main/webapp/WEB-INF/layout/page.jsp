@@ -3,7 +3,10 @@
 <%@ taglib prefix="t" uri="http://tiles.apache.org/tags-tiles" %>
 <html>
 <head>
-	<title>Spittr</title>
+<title>Spittr</title>
+<style type="text/css">
+    #header,#footer {text-align: center;}
+</style>
 </head>
 <body>
 	<div id="header">
