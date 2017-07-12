@@ -5,7 +5,9 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -46,4 +48,25 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(new SpitterUserService(spitterRespository));
 	}
 
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		/*http.authorizeRequests().regexMatchers("/spitter/\\w{1,}").authenticated()
+		.antMatchers(HttpMethod.POST, "/spittles").authenticated()
+		.anyRequest().permitAll();*/
+		
+		/*http.authorizeRequests().antMatchers("/spitter/**").hasAuthority("ROLE_SPITTER")
+		.antMatchers(HttpMethod.POST, "/spittles").hasAuthority("ROLE_SPITTER")
+		.anyRequest().permitAll();*/
+		
+		// SpringEL
+		http.authorizeRequests().antMatchers("/spitter/**").access("hasRole('ROLE_SPITTER')")
+		.antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER").anyRequest().permitAll()
+		.and().requiresChannel().antMatchers("/spitter/register").requiresSecure() // 需要HTTPS，自动重定向到HTTPS
+		.and().requiresChannel().antMatchers("/").requiresInsecure()
+		.and()
+		.csrf().disable() // 禁用csrf
+		.formLogin(); // 登录
+		
+	}
+	
 }
