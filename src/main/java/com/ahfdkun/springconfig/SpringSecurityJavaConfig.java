@@ -50,9 +50,10 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().regexMatchers("/spitter/\\w{1,}").authenticated()
+		
+		/*http.authorizeRequests().regexMatchers("/spitter/\\w{1,}").authenticated()
 		.antMatchers(HttpMethod.POST, "/spittles").authenticated()
-		.anyRequest().permitAll();
+		.anyRequest().permitAll();*/
 		
 		/*http.authorizeRequests().antMatchers("/spitter/**").hasAuthority("ROLE_SPITTER")
 		.antMatchers(HttpMethod.POST, "/spittles").hasAuthority("ROLE_SPITTER")
@@ -60,7 +61,8 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		
 		// SpringEL
 		http.authorizeRequests()
-		.antMatchers("/spitter/**").access("hasRole('ROLE_SPITTER')")
+		.antMatchers("/spitter**").access("hasRole('ROLE_SPITTER')")
+		.regexMatchers("/spittles.*").access("hasRole('ROLE_SPITTER')")
 		.antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER").anyRequest().permitAll()
 //		.and().requiresChannel().antMatchers("/spitter/register").requiresSecure() // 需要HTTPS，自动重定向到HTTPS
 //		.and().requiresChannel().antMatchers("/").requiresInsecure() // 自动重定向到HTTP
