@@ -16,7 +16,7 @@ import com.ahfdkun.repository.SpitterRespository;
 
 /**
  * @Description Security配置自定义的用户服务。<br>
- * 可以直接修改Spitter，实现UserDetailsService,这样loadUserByUsername()就能直接返回Spitter本身。<br>
+ * Fix: 可以直接修改Spitter，实现UserDetailsService,这样loadUserByUsername()就能直接返回Spitter本身。<br>
  *
  * @author zhaoyakun
  *
