@@ -123,6 +123,7 @@
 					<systemProperties>
 						<spring.condition>prod</spring.condition>
 					</systemProperties>
+					<contextFile>src/main/webapp/META-INF/context.xml</contextFile>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -234,6 +235,16 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-dbcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		    <version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

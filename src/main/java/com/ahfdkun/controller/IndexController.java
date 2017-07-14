@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,10 @@ public class IndexController {
 	@Autowired(required = false)
 	@Qualifier("hashmap1")
 	private HashMap<String, String> hashmap1;
+	
+	@Autowired(required = false)
+	@Qualifier("dataSource")
+	private JndiObjectFactoryBean jndiObjectFactoryBean;
 
 	@RequestMapping("/index")
 	public String index(ModelMap model, HttpServletRequest request) {
@@ -27,6 +32,7 @@ public class IndexController {
 		model.addAttribute("hashmap", hashmap);
 		model.addAttribute("hashmap1", hashmap1);
 		request.setAttribute("name", "ahfdkun");
+		request.setAttribute("jndiObjectFactoryBean", jndiObjectFactoryBean);
 		return "index";
 	}
 
