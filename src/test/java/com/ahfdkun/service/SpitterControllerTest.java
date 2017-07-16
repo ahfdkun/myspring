@@ -40,8 +40,7 @@ public class SpitterControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		
 		Spitter unsaved = new Spitter("ahfdkun", "123456", "Yakun", "Zhao");
-		Spitter saved = new Spitter(24L, "ahfdkun", "123456", "Yakun", "Zhao");
-		when(mockRepository.save(unsaved)).thenReturn(saved);
+		when(mockRepository.save(unsaved)).thenReturn(1);
 		
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 		mockMvc.perform(post("/spitter/register")
@@ -71,8 +70,7 @@ public class SpitterControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		
 		Spitter unsaved = new Spitter(null, "123456", "Yakun", "Zhao");
-		Spitter saved = new Spitter(24L, null, "123456", "Yakun", "Zhao");
-		when(mockRepository.save(unsaved)).thenReturn(saved);
+		when(mockRepository.save(unsaved)).thenReturn(1);
 		
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 		mockMvc.perform(post("/spitter/register")

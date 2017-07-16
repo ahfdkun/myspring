@@ -12,8 +12,7 @@ public class Spittle {
 	private Date time;
 	private Double latitude;
 	private Double longitude;
-	
-	
+
 	public Spittle() {
 	}
 
@@ -27,7 +26,7 @@ public class Spittle {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
+
 	public Spittle(Long id, String message, Date time, Double latitude, Double longitude) {
 		this.id = id;
 		this.message = message;
@@ -35,7 +34,23 @@ public class Spittle {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

@@ -6,6 +6,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
@@ -48,14 +50,13 @@ public class SpringJavaJDBCConfig {
 		return ds;
 	}
 	
-	
 	/**
 	 * 基于JDBC驱动的数据源
 	 * 
 	 * @return
 	 */
 	@Bean
-	@Profile("prod")
+	@Profile("qa")
 	public DataSource dataSource2() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
@@ -65,5 +66,19 @@ public class SpringJavaJDBCConfig {
 		return ds;
 	}
 	
+	@Bean
+	public JdbcTemplate jdbcTempldate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
+	}
 	
+	/**
+	 * 使用命名参数
+	 * 
+	 * @param dataSource
+	 * @return
+	 */
+	@Bean
+	public NamedParameterJdbcTemplate namedJdbcTempldate(DataSource dataSource) {
+		return new NamedParameterJdbcTemplate(dataSource);
+	}
 }
