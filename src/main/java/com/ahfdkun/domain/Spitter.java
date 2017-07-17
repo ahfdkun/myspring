@@ -34,6 +34,7 @@ public class Spitter implements Serializable {
 	
 	@NotNull
 	@Size(min=2, max=30, message="{firstName.size}")
+	@Column(name="first_name")
 	private String firstName;
 	
 	@NotNull
