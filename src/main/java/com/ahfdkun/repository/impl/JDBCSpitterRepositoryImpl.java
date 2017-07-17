@@ -31,6 +31,9 @@ public class JDBCSpitterRepositoryImpl implements SpitterRespository {
 	
 	private JdbcOperations jdbcOperations;
 	
+	/**
+	 * 使用命名参数
+	 */
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
