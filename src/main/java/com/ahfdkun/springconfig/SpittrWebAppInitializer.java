@@ -40,5 +40,5 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	protected Filter[] getServletFilters() {
 		return new Filter[] { new MyFilter() };
 	}
-	
+
 }

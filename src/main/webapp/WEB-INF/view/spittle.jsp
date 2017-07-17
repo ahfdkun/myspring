@@ -14,5 +14,4 @@
 			<input type="submit" value="submit" />
 		</sf:form>
 	</sec:authorize>
-	
 </div>

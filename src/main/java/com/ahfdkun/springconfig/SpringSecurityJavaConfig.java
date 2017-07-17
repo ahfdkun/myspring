@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.ahfdkun.repository.SpitterRespository;
 import com.ahfdkun.service.impl.SpitterUserService;
@@ -51,6 +53,8 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
+		addEncodingFilter(http);
+		
 		/*http.authorizeRequests().regexMatchers("/spitter/\\w{1,}").authenticated()
 		.antMatchers(HttpMethod.POST, "/spittles").authenticated()
 		.anyRequest().permitAll();*/
@@ -61,7 +65,7 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		
 		// SpringEL
 		http.authorizeRequests()
-		.antMatchers("/spitter**").access("hasRole('ROLE_SPITTER')")
+		.antMatchers("/spitter/**").access("hasRole('ROLE_SPITTER')")
 		.regexMatchers("/spittles.*").access("hasRole('ROLE_SPITTER')")
 		.antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER").anyRequest().permitAll()
 //		.and().requiresChannel().antMatchers("/spitter/register").requiresSecure() // 需要HTTPS，自动重定向到HTTPS
@@ -74,6 +78,14 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.httpBasic().realmName("Spittr"); // Http Basic 
 	
+	}
+	
+	// 设置SpringSecurity乱码问题
+	private void addEncodingFilter(HttpSecurity http) {
+		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+		encodingFilter.setEncoding("UTF-8");
+		encodingFilter.setForceEncoding(true);
+		http.addFilterBefore(encodingFilter, CsrfFilter.class);
 	}
 	
 }
