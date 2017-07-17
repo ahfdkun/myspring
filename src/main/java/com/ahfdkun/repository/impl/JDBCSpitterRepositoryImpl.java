@@ -20,7 +20,7 @@ import com.ahfdkun.repository.SpitterRespository;
  * 
  * @date: 2017年6月30日 下午3:26:02
  */
-@Repository
+/*@Repository*/
 public class JDBCSpitterRepositoryImpl implements SpitterRespository {
 
 	private static final String INSERT_SPITTER = 
