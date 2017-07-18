@@ -19,10 +19,16 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
-@Configuration
-@EnableTransactionManagement
-public class SpringJavaJDBCConfig {
+/**
+ * @Description 基于Hibernate 
+ *
+ * @author zhaoyakun
+ *
+ * @date 2017年7月19日 上午12:08:53
+ */
+/*@Configuration
+@EnableTransactionManagement*/
+public class SpringJavaHibernateConfig {
 	
 	/**
 	 * 类似于 <html>&lt;jee:jndi-lookup /&gt;</html>

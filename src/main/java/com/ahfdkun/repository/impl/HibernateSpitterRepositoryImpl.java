@@ -12,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ahfdkun.aop.Audience;
 import com.ahfdkun.domain.Spitter;
 import com.ahfdkun.repository.SpitterRespository;
 
@@ -23,19 +22,19 @@ import com.ahfdkun.repository.SpitterRespository;
  * 
  * @date: 2017年6月30日 下午3:26:02
  */
-@Repository
-@Transactional
+/*@Repository
+@Transactional*/
 public class HibernateSpitterRepositoryImpl implements SpitterRespository {
 
 	public static Logger log = Logger.getLogger(HibernateSpitterRepositoryImpl.class);
-	
+
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	public HibernateSpitterRepositoryImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
