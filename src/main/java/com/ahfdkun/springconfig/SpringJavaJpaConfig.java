@@ -3,13 +3,16 @@ package com.ahfdkun.springconfig;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -23,6 +26,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
+//使用Spring Data JPA实现自动化的JPA Repository
+//@EnableJpaRepositories(basePackageClasses= SpitterRespository.class)
 public class SpringJavaJpaConfig {
 	
 	/**
@@ -97,6 +102,25 @@ public class SpringJavaJpaConfig {
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(emf);
 		return txManager;
+	}
+	
+	/**
+	 * 为了让Spring理解 @PersistenceUnit、@PersistenceContext
+	 * @return
+	 */
+	@Bean
+	public PersistenceAnnotationBeanPostProcessor paPostProcessor() {
+		return new PersistenceAnnotationBeanPostProcessor();
+	}
+	
+	/**
+	 * 会在所有@Repository注解类上添加一个Advisor，捕获异常并将以Spring非检查型数据访问异常的形式重新抛出
+	 * 
+	 * @return
+	 */
+	@Bean
+	public BeanPostProcessor persistenceTranslation() {
+		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
 }

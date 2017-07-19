@@ -34,7 +34,7 @@ public class SpitterControllerTest {
 			.andExpect(view().name("registerForm"));
 	}
 	
-	@Test
+	/*@Test
 	public void shouldProcessRegistration() throws Exception {
 		SpitterRespository mockRepository = mock(SpitterRespository.class);
 		SpitterController controller = new SpitterController(mockRepository);
@@ -78,6 +78,6 @@ public class SpitterControllerTest {
 				.param("lastName", "Zhao")
 				.param("password", "123456"))
 			.andExpect(redirectedUrl("/spitter/null"));
-	}
+	}*/
 	
 }
