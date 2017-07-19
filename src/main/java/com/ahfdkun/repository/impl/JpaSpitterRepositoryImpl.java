@@ -2,8 +2,8 @@ package com.ahfdkun.repository.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -26,18 +26,23 @@ public class JpaSpitterRepositoryImpl implements SpitterRespository {
 
 	public static Logger log = Logger.getLogger(JpaSpitterRepositoryImpl.class);
 
-	@PersistenceUnit
-	private EntityManagerFactory emf; // 注入EntityManagerFactory
+	/*@PersistenceUnit
+	private EntityManagerFactory emf;*/ // 注入EntityManagerFactory
+	
+	@PersistenceContext
+	private EntityManager em;
 
 	@Override
 	public int save(Spitter spitter) {
-		emf.createEntityManager().persist(spitter);
+		// emf.createEntityManager().persist(spitter);
+		em.persist(spitter);
 		return 0;
 	}
 
 	@Override
 	public Spitter findByUsername(String username) {
-		Query query = emf.createEntityManager().createQuery("select p from Spitter p where p.username=?1", Spitter.class);
+		/*Query query = emf.createEntityManager().createQuery("select p from Spitter p where p.username=?1", Spitter.class);*/
+		Query query = em.createQuery("select p from Spitter p where p.username=?1", Spitter.class);
 		query.setParameter(1, username);
 		List<Spitter> spitters = query.getResultList();
 		if (spitters == null || spitters.isEmpty())
