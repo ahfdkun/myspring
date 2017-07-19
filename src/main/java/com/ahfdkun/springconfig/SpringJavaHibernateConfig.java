@@ -1,19 +1,34 @@
 package com.ahfdkun.springconfig;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
-@Configuration
-public class SpringJavaJDBCConfig {
+/**
+ * @Description 基于Hibernate 
+ *
+ * @author zhaoyakun
+ *
+ * @date 2017年7月19日 上午12:08:53
+ */
+/*@Configuration
+@EnableTransactionManagement*/
+public class SpringJavaHibernateConfig {
 	
 	/**
 	 * 类似于 <html>&lt;jee:jndi-lookup /&gt;</html>
@@ -81,4 +96,48 @@ public class SpringJavaJDBCConfig {
 	public NamedParameterJdbcTemplate namedJdbcTempldate(DataSource dataSource) {
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
+	
+	/**
+	 * 配置Hibernate Session工厂Bean来获取SessionFactory
+	 * 
+	 * @param dataSource
+	 * @return
+	 */
+	@Bean
+	public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+		LocalSessionFactoryBean sfb = new LocalSessionFactoryBean();
+		sfb.setDataSource(dataSource);
+		sfb.setPackagesToScan("com.ahfdkun.domain");
+		Properties props = new Properties();
+		props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		props.setProperty("hibernate.show_sql", "true");
+		props.setProperty("hibernate.format_sql", "true");
+		props.setProperty("hibernate.hbm2ddl.auto", "update");
+		sfb.setHibernateProperties(props);
+		return sfb;
+	}
+	
+	/**
+	 * 会在所有@Repository注解类上添加一个Advisor，捕获异常并将以Spring非检查型数据访问异常的形式重新抛出
+	 * 
+	 * @return
+	 */
+	@Bean
+	public BeanPostProcessor persistenceTranslation() {
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
+	
+	/**
+	 * 添加事务管理
+	 * 
+	 * @param sessionFactory
+	 * @return
+	 */
+	@Bean
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		txManager.setSessionFactory(sessionFactory);
+		return txManager;
+	}
+	
 }

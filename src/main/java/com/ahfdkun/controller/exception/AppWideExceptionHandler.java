@@ -20,4 +20,5 @@ public class AppWideExceptionHandler {
 	public String duplicateSpittleHandler() {
 		return "error/duplicate";
 	}
+	
 }
