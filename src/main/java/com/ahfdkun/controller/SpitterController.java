@@ -17,16 +17,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 @Controller
 @RequestMapping("/spitter")
 public class SpitterController {
 
-	private SpitterRespository spitterRespository;
+	private SpitterRepository spitterRespository;
 	
 	@Autowired
-	public SpitterController(SpitterRespository spitterRespository) {
+	public SpitterController(SpitterRepository spitterRespository) {
 		this.spitterRespository = spitterRespository;
 	}
 
