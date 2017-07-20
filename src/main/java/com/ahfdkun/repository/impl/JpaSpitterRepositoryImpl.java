@@ -20,9 +20,9 @@ import com.ahfdkun.repository.SpitterRespository;
  * 
  * @date: 2017年6月30日 下午3:26:02
  */
-@Repository
-@Transactional
-public class JpaSpitterRepositoryImpl implements SpitterRespository {
+/*@Repository
+@Transactional*/
+public class JpaSpitterRepositoryImpl /*implements SpitterRespository*/ {
 
 	public static Logger log = Logger.getLogger(JpaSpitterRepositoryImpl.class);
 
@@ -32,14 +32,12 @@ public class JpaSpitterRepositoryImpl implements SpitterRespository {
 	@PersistenceContext
 	private EntityManager em;
 
-	@Override
 	public int save(Spitter spitter) {
 		// emf.createEntityManager().persist(spitter);
 		em.persist(spitter);
 		return 0;
 	}
 
-	@Override
 	public Spitter findByUsername(String username) {
 		/*Query query = emf.createEntityManager().createQuery("select p from Spitter p where p.username=?1", Spitter.class);*/
 		Query query = em.createQuery("select p from Spitter p where p.username=?1", Spitter.class);

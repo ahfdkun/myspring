@@ -24,7 +24,7 @@ import com.ahfdkun.repository.SpitterRespository;
  */
 /*@Repository
 @Transactional*/
-public class HibernateSpitterRepositoryImpl implements SpitterRespository {
+public class HibernateSpitterRepositoryImpl /*implements SpitterRespository*/ {
 
 	public static Logger log = Logger.getLogger(HibernateSpitterRepositoryImpl.class);
 
@@ -39,13 +39,11 @@ public class HibernateSpitterRepositoryImpl implements SpitterRespository {
 		return sessionFactory.getCurrentSession();
 	}
 
-	@Override
 	public int save(Spitter spitter) {
 		Serializable id = getSession().save(spitter);
 		return ((Long) id).intValue();
 	}
 
-	@Override
 	public Spitter findByUsername(String username) {
 		List<Spitter> spitters = getSession().createCriteria(Spitter.class).add(Restrictions.eq("username", username)).list();
 		if (spitters == null || spitters.isEmpty())

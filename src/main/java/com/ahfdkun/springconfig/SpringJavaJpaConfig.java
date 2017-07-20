@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,6 +17,8 @@ import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcesso
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.ahfdkun.repository.SpitterRespository;
 
 /**
  * @Description 基于JPA 
@@ -27,7 +30,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 //使用Spring Data JPA实现自动化的JPA Repository
-//@EnableJpaRepositories(basePackageClasses= SpitterRespository.class)
+@EnableJpaRepositories(basePackageClasses= SpitterRespository.class)
 public class SpringJavaJpaConfig {
 	
 	/**
@@ -50,16 +53,19 @@ public class SpringJavaJpaConfig {
 	/**
 	 * 使用容器管理类型的JPA获取实体管理器工厂
 	 * 
+	 * <p><b>方法名称一定要是entityManagerFactory</b></p>
+	 * 
 	 * @param dataSource
 	 * @param jpaVendorAdapter
 	 * @return
 	 */
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityMangerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
 		LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
 		emfb.setDataSource(dataSource);
 		emfb.setJpaVendorAdapter(jpaVendorAdapter);
 		emfb.setPackagesToScan("com.ahfdkun.domain");
+		emfb.afterPropertiesSet();
 		return emfb;
 	}
 	
@@ -105,7 +111,7 @@ public class SpringJavaJpaConfig {
 	}
 	
 	/**
-	 * 为了让Spring理解 @PersistenceUnit、@PersistenceContext
+	 * 为了让Spring理解 @PersistenceUnit @PersistenceContext
 	 * @return
 	 */
 	@Bean

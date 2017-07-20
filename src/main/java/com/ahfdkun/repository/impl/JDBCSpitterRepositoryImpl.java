@@ -21,7 +21,7 @@ import com.ahfdkun.repository.SpitterRespository;
  * @date: 2017年6月30日 下午3:26:02
  */
 /*@Repository*/
-public class JDBCSpitterRepositoryImpl implements SpitterRespository {
+public class JDBCSpitterRepositoryImpl /*implements SpitterRespository*/ {
 
 	private static final String INSERT_SPITTER = 
 			"insert into Spitter" + 
@@ -42,7 +42,6 @@ public class JDBCSpitterRepositoryImpl implements SpitterRespository {
 		this.namedParameterJdbcOperations = namedParameterJdbcOperations;
 	}
 
-	@Override
 	public int save(Spitter spitter) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("username", spitter.getUsername());
@@ -54,7 +53,6 @@ public class JDBCSpitterRepositoryImpl implements SpitterRespository {
 				spitter.getUsername(), spitter.getPassword(), spitter.getFirstName(), spitter.getLastName());*/
 	}
 
-	@Override
 	public Spitter findByUsername(String username) {
 		return jdbcOperations.queryForObject("select * from spitter where username = ?", this::mySpitter, username);
 	}
