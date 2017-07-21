@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.ahfdkun.controller.SpitterController;
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 /**
  * @Description: Mock测试
@@ -26,7 +26,7 @@ public class SpitterControllerTest {
 	
 	@Test
 	public void testShowRegistrationForm() throws Exception {
-		SpitterRespository mockRepository = mock(SpitterRespository.class);
+		SpitterRepository mockRepository = mock(SpitterRepository.class);
 		SpitterController controller = new SpitterController(mockRepository);
 		
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();

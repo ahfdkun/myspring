@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 /**
  * @Description: 不使用Spring模版的JPA Repository

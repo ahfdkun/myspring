@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 /**
  * @Description: 借助Hibernate Session实现不依赖与Spring的Repository

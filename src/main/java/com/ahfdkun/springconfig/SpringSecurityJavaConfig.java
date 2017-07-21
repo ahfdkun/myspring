@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 import com.ahfdkun.service.impl.SpitterUserService;
 
 /**
@@ -33,7 +33,7 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 	
 	@Autowired
-	SpitterRespository spitterRespository;
+	SpitterRepository spitterRespository;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

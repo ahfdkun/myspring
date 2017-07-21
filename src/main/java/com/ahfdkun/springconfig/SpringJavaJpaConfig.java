@@ -18,7 +18,7 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 /**
  * @Description 基于JPA 
@@ -30,7 +30,7 @@ import com.ahfdkun.repository.SpitterRespository;
 @Configuration
 @EnableTransactionManagement
 //使用Spring Data JPA实现自动化的JPA Repository
-@EnableJpaRepositories(basePackageClasses= SpitterRespository.class)
+@EnableJpaRepositories(basePackageClasses= SpitterRepository.class)
 public class SpringJavaJpaConfig {
 	
 	/**
@@ -124,9 +124,9 @@ public class SpringJavaJpaConfig {
 	 * 
 	 * @return
 	 */
-	@Bean
+	/*@Bean
 	public BeanPostProcessor persistenceTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
-	}
+	}*/
 	
 }

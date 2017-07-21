@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRespository;
+import com.ahfdkun.repository.SpitterRepository;
 
 /**
  * @Description Security配置自定义的用户服务。<br>
@@ -24,16 +24,19 @@ import com.ahfdkun.repository.SpitterRespository;
  */
 public class SpitterUserService implements UserDetailsService {
 
-	private final SpitterRespository spitterRespository;
+	private final SpitterRepository spitterRespository;
 
 	@Autowired
-	public SpitterUserService(SpitterRespository spitterRespository) {
+	public SpitterUserService(SpitterRepository spitterRespository) {
 		this.spitterRespository = spitterRespository;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Spitter spitter = spitterRespository.findByUsername(username);
+		System.out.println(spitterRespository.findAll());
+		System.out.println(spitterRespository.findAllMySpitters());
+		System.out.println(spitterRespository.slitSweep());
 		if (spitter != null) {
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_SPITTER"));
