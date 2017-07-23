@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 import com.ahfdkun.service.impl.SpitterUserService;
 
 /**

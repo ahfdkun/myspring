@@ -1,4 +1,4 @@
-package com.ahfdkun.repository;
+package com.ahfdkun.repository.jpa;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.ahfdkun.domain.Spitter;
+import com.ahfdkun.repository.SpitterSweeper;
 
 /**
  * @Description 使用Spring Data JPA实现自动化
