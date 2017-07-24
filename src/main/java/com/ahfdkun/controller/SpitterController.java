@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 
 @Controller
 @RequestMapping("/spitter")

@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 
 /**
  * @Description: Spring中使用JDBC

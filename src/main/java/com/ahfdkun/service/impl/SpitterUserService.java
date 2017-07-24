@@ -3,6 +3,7 @@ package com.ahfdkun.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.impl.JpaSpitterRepositoryImpl;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 
 /**
  * @Description Security配置自定义的用户服务。<br>
@@ -24,6 +26,8 @@ import com.ahfdkun.repository.SpitterRepository;
  */
 public class SpitterUserService implements UserDetailsService {
 
+	public static Logger log = Logger.getLogger(JpaSpitterRepositoryImpl.class);
+	
 	private final SpitterRepository spitterRespository;
 
 	@Autowired
@@ -34,9 +38,9 @@ public class SpitterUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Spitter spitter = spitterRespository.findByUsername(username);
-		System.out.println(spitterRespository.findAll());
-		System.out.println(spitterRespository.findAllMySpitters());
-		System.out.println(spitterRespository.slitSweep());
+		log.info(spitterRespository.findAll());
+		log.info(spitterRespository.findAllMySpitters());
+		log.info(spitterRespository.slitSweep());
 		if (spitter != null) {
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_SPITTER"));

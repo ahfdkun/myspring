@@ -3,11 +3,9 @@ package com.ahfdkun.springconfig;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,7 +16,7 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 
 /**
  * @Description 基于JPA 
@@ -30,7 +28,7 @@ import com.ahfdkun.repository.SpitterRepository;
 @Configuration
 @EnableTransactionManagement
 //使用Spring Data JPA实现自动化的JPA Repository
-@EnableJpaRepositories(basePackageClasses= SpitterRepository.class)
+@EnableJpaRepositories(basePackageClasses = SpitterRepository.class)
 public class SpringJavaJpaConfig {
 	
 	/**

@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.ahfdkun.controller.SpitterController;
 import com.ahfdkun.domain.Spitter;
-import com.ahfdkun.repository.SpitterRepository;
+import com.ahfdkun.repository.jpa.SpitterRepository;
 
 /**
  * @Description: Mock测试
