@@ -259,6 +259,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- NEO4J -->
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-neo4j</artifactId>
+		    <version>3.1.6.RELEASE</version>
+		</dependency>
 		
 		<dependency>
 		    <groupId>mysql</groupId>
