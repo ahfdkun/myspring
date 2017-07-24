@@ -22,7 +22,7 @@ import com.ahfdkun.repository.mongo.OrderRepository;
 @RequestMapping("/order")
 public class OrderController {
 
-	public static Logger log = Logger.getLogger(SpitterRepositoryImpl.class);
+	public static Logger log = Logger.getLogger(OrderController.class);
 	
 	private final OrderRepository orderRespository;
 	

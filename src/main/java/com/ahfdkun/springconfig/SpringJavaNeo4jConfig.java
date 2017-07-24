@@ -1,12 +1,14 @@
 package com.ahfdkun.springconfig;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
+import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.ahfdkun.repository.mongo.OrderRepository;
+import com.ahfdkun.repository.neo4j.LineItemRepository;
 
 /**
  * @Description 基于Spring Data Neo4j
@@ -15,19 +17,16 @@ import com.ahfdkun.repository.mongo.OrderRepository;
  *
  * @date 2017年7月19日 上午12:09:09
  */
-// @Configuration
+//@Configuration
 // 使用Spring Data Neo4j实现自动化的Repository
-@EnableNeo4jRepositories(basePackageClasses = OrderRepository.class)
-public class SpringJavaNeo4jConfig extends Neo4jConfiguration {
+//@EnableTransactionManagement
+//@ComponentScan("com.ahfdkun")
+//@EnableNeo4jRepositories(basePackageClasses = LineItemRepository.class)
+public class SpringJavaNeo4jConfig /*extends Neo4jConfiguration*/ {
 
-	public SpringJavaNeo4jConfig() {
-		setBasePackage("com.ahfdkun.domain"); // 设置模型的基础包
-	}
-	
-	@Bean(destroyMethod = "shutdown")
-	public GraphDatabaseService graphDatabaseService() {
-		// 配置嵌入式数据库
-		return new GraphDatabaseFactory().newEmbeddedDatabase("c:/tmp/graphdb");
+	@Bean
+	public SessionFactory getSessionFactory() {
+		return new SessionFactory("com.ahfdkun.domain");
 	}
 	
 }
