@@ -285,7 +285,14 @@
 		    <artifactId>jedis</artifactId>
 		    <version>2.9.0</version>
 		</dependency>
-    
+		
+    	<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+		<dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
+		    <version>2.10.3</version>
+		</dependency>
+		
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
