@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spittle;
 import com.ahfdkun.exception.web.DuplicateSpittleException;
@@ -17,7 +20,7 @@ import com.ahfdkun.repository.SpittleRespository;
  * 
  * @date: 2017年6月30日 下午3:26:39
  */
-@Component
+@Repository
 public class SpittleRepositoryImpl implements SpittleRespository {
 
 	@Override
@@ -29,17 +32,23 @@ public class SpittleRepositoryImpl implements SpittleRespository {
 		return spittles;
 	}
 
-	@Override
+	@Cacheable("spittleCache") // 只是当前实现类会生效Cache
 	public Spittle findOne(long spittleId) {
 		return new Spittle("abc", new Date(), 100.0, 200.1);
 	}
 
-	@Override
+	@CachePut(value = "spittleCache", key = "#result.id", unless = "#result.message.contains('abc')")
 	public Spittle save(Spittle spittle) {
+		spittle.setId(2L);
 		if (spittle.getId() == null) {
 			throw new DuplicateSpittleException();
 		}
-		return null;
+		return spittle;
+	}
+
+	@CacheEvict("spittleCache")
+	public void remove(long spittleId) {
+		System.out.println("spittleId removed: " + spittleId);
 	}
 
 }

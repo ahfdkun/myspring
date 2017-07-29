@@ -1,12 +1,16 @@
 package com.ahfdkun.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Spittle {
+public class Spittle implements Serializable {
 
+	private static final long serialVersionUID = -8225463520682613284L;
+	
 	private Long id;
 	private String message;
 	private Date time;
@@ -85,4 +89,9 @@ public class Spittle {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+	
 }

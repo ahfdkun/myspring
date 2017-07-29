@@ -43,7 +43,7 @@ public class SpringJavaRedisConfig {
 	 */
 	private void _set_serializable(RedisTemplate<String, Product> redis) {
 		redis.setKeySerializer(new StringRedisSerializer());
-		redis.setValueSerializer(new Jackson2JsonRedisSerializer<Product>(Product.class));
+		redis.setValueSerializer(new Jackson2JsonRedisSerializer<>(Product.class));
 	}
 	
 }

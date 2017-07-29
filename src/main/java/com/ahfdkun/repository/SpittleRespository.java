@@ -11,4 +11,7 @@ public interface SpittleRespository {
 	Spittle findOne(long spittleId);
 
 	Spittle save(Spittle spittle);
+	
+	public void remove(long spittleId);
+	
 }

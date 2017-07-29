@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ahfdkun.constant.SpittleConstant;
 import com.ahfdkun.domain.Spittle;
@@ -60,6 +61,14 @@ public class SpittleController {
 	public String saveSpittle(Spittle spittle, Model model) {
 		spittleRespository.save(new Spittle(null, spittle.getMessage(), new Date(), spittle.getLatitude(), spittle.getLongitude()));
 		return "redirect:/spittles";
+	}
+	
+	
+	@RequestMapping(value = "/delete/{spittleId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteSpittle(@PathVariable("spittleId") long spittleId, Model model) {
+		spittleRespository.remove(spittleId);
+		return "Success";
 	}
 	
 }
