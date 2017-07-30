@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,7 @@ public class SpittleController {
 	@RequestMapping(value="/{spittleId}", method = RequestMethod.GET)
 	public String showSpittle(@PathVariable("spittleId") long spittleId, Model model) {
 		Spittle spittle = spittleRespository.findOne(spittleId);
-		if (spittle == null) 
+		if (spittle != null) // 测试异常使用
 			throw new SpittleNotFoundException();
 		model.addAttribute(spittle);
 		return "spittle";

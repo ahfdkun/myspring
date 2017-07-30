@@ -4,8 +4,9 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -67,7 +68,8 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/spitter/**").access("hasRole('ROLE_SPITTER')")
 		.regexMatchers("/spittles.*").access("hasRole('ROLE_SPITTER')")
-		.antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER").anyRequest().permitAll()
+//		.antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER")
+		.anyRequest().permitAll()
 //		.and().requiresChannel().antMatchers("/spitter/register").requiresSecure() // 需要HTTPS，自动重定向到HTTPS
 //		.and().requiresChannel().antMatchers("/").requiresInsecure() // 自动重定向到HTTP
 		.and()
@@ -86,6 +88,11 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		encodingFilter.setEncoding("UTF-8");
 		encodingFilter.setForceEncoding(true);
 		http.addFilterBefore(encodingFilter, CsrfFilter.class);
+	}
+	
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception { // 方法安全需要使用
+		return super.authenticationManagerBean();
 	}
 	
 }

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spittle;
@@ -32,12 +35,14 @@ public class SpittleRepositoryImpl implements SpittleRespository {
 		return spittles;
 	}
 
-	@Cacheable("spittleCache") // 只是当前实现类会生效Cache
+	//@Cacheable("spittleCache") // 只是当前实现类会生效Cache
+	@RolesAllowed("ROLE_SPITTER") // 接口不生效
 	public Spittle findOne(long spittleId) {
 		return new Spittle("abc", new Date(), 100.0, 200.1);
 	}
 
 	@CachePut(value = "spittleCache", key = "#result.id", unless = "#result.message.contains('abc')")
+	@Secured("ROLE_SPITTER")
 	public Spittle save(Spittle spittle) {
 		spittle.setId(2L);
 		if (spittle.getId() == null) {
