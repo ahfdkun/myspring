@@ -16,9 +16,9 @@ import net.sf.ehcache.CacheManager;
  *
  * @date 2017年7月27日 下午9:05:40
  */
-@Configuration
+//@Configuration
 // 启用缓存
-@EnableCaching
+//@EnableCaching
 public class SpringEhCacheJavaConfig {
 
 	@Bean

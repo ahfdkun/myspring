@@ -1,5 +1,7 @@
 package com.ahfdkun.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class SpittleController {
 	@RequestMapping(value="/{spittleId}", method = RequestMethod.GET)
 	public String showSpittle(@PathVariable("spittleId") long spittleId, Model model) {
 		Spittle spittle = spittleRespository.findOne(spittleId);
-		if (spittle != null) // 测试异常使用
+		if (spittle == null) // 测试异常使用
 			throw new SpittleNotFoundException();
 		model.addAttribute(spittle);
 		return "spittle";
@@ -68,7 +70,7 @@ public class SpittleController {
 	@RequestMapping(value = "/delete/{spittleId}", method = RequestMethod.GET)
 	@ResponseBody
 	public String deleteSpittle(@PathVariable("spittleId") long spittleId, Model model) {
-		spittleRespository.remove(spittleId);
+		spittleRespository.remove(new ArrayList<>(Arrays.asList()));
 		return "Success";
 	}
 	
