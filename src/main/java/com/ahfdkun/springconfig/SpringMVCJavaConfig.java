@@ -19,6 +19,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
@@ -93,7 +94,7 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 	// 等同于 <mvc:default-servlet-handler />
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
+		// configurer.enable(); // Spring RPC模型，会出错
 	}
 
 	// 验证器
@@ -111,6 +112,12 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 		httpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.valueOf("text/html;charset=UTF-8")));
 		handlerAdapter.setMessageConverters(Arrays.asList(httpMessageConverter));
 		return handlerAdapter;
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 静态资源的访问路径配置
+		registry.addResourceHandler("/resources/images/**").addResourceLocations("/resources/images/");
 	}
 	
 }

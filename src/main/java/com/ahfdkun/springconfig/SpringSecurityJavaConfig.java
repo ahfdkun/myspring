@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -73,7 +74,7 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 //		.and().requiresChannel().antMatchers("/spitter/register").requiresSecure() // 需要HTTPS，自动重定向到HTTPS
 //		.and().requiresChannel().antMatchers("/").requiresInsecure() // 自动重定向到HTTP
 		.and()
-//		.csrf().disable() // 禁用csrf
+		.csrf().disable() // 禁用csrf
 		.formLogin().loginPage("/login") // 登录
 		.and().rememberMe().tokenValiditySeconds(300).key("spittrKey") // 记住我
 		.and().logout().logoutSuccessUrl("/").logoutUrl("/signout"); // 退出
@@ -94,5 +95,5 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception { // 方法安全需要使用
 		return super.authenticationManagerBean();
 	}
-	
+
 }
