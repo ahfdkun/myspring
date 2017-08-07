@@ -1,15 +1,19 @@
 package com.ahfdkun.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ahfdkun.constant.SpittleConstant;
 import com.ahfdkun.domain.Spittle;
@@ -50,7 +54,7 @@ public class SpittleController {
 	@RequestMapping(value="/{spittleId}", method = RequestMethod.GET)
 	public String showSpittle(@PathVariable("spittleId") long spittleId, Model model) {
 		Spittle spittle = spittleRespository.findOne(spittleId);
-		if (spittle == null) 
+		if (spittle == null) // 测试异常使用
 			throw new SpittleNotFoundException();
 		model.addAttribute(spittle);
 		return "spittle";
@@ -60,6 +64,14 @@ public class SpittleController {
 	public String saveSpittle(Spittle spittle, Model model) {
 		spittleRespository.save(new Spittle(null, spittle.getMessage(), new Date(), spittle.getLatitude(), spittle.getLongitude()));
 		return "redirect:/spittles";
+	}
+	
+	
+	@RequestMapping(value = "/delete/{spittleId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteSpittle(@PathVariable("spittleId") long spittleId, Model model) {
+		spittleRespository.remove(new ArrayList<>(Arrays.asList()));
+		return "Success";
 	}
 	
 }

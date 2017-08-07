@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 public class Spitter implements Serializable {
@@ -109,4 +110,9 @@ public class Spitter implements Serializable {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+	
 }

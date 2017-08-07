@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Repository;
 
 import com.ahfdkun.domain.Spittle;
 import com.ahfdkun.exception.web.DuplicateSpittleException;
@@ -17,7 +20,7 @@ import com.ahfdkun.repository.SpittleRespository;
  * 
  * @date: 2017年6月30日 下午3:26:39
  */
-@Component
+@Repository
 public class SpittleRepositoryImpl implements SpittleRespository {
 
 	@Override
@@ -29,17 +32,25 @@ public class SpittleRepositoryImpl implements SpittleRespository {
 		return spittles;
 	}
 
-	@Override
+	//@Cacheable("spittleCache") // 只是当前实现类会生效Cache
+	// @RolesAllowed("ROLE_SPITTER") // 接口不生效
 	public Spittle findOne(long spittleId) {
-		return new Spittle("abc", new Date(), 100.0, 200.1);
+		return new Spittle("ahfdkun", new Date(), 100.0, 200.1);
 	}
 
-	@Override
+	@CachePut(value = "spittleCache", key = "#result.id", unless = "#result.message.contains('abc')")
+	@Secured("ROLE_SPITTER")
 	public Spittle save(Spittle spittle) {
-		if (spittle.getId() == null) {
+		spittle.setId(2L);
+		if (spittle.getId() != null) {
 			throw new DuplicateSpittleException();
 		}
-		return null;
+		return spittle;
+	}
+
+	@CacheEvict("spittleCache") // 删除缓存，名称为‘spittleCache’
+	public void remove(List<Long> spittleIds) {
+		System.out.println("spittleIds removed: " + spittleIds);
 	}
 
 }

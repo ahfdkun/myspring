@@ -1,6 +1,7 @@
 package com.ahfdkun.springconfig;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
@@ -16,7 +19,9 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
@@ -89,13 +94,30 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 	// 等同于 <mvc:default-servlet-handler />
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
+		// configurer.enable(); // Spring RPC模型，会出错
 	}
 
 	// 验证器
 	@Override
 	public Validator getValidator() {
 		return new CustomValidatorBean();
+	}
+	
+	// 设置@ResponseBody乱码
+	@Bean
+	public RequestMappingHandlerAdapter mappingHandlerAdapter() {
+		RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
+		StringHttpMessageConverter httpMessageConverter = new StringHttpMessageConverter();
+		httpMessageConverter.setWriteAcceptCharset(false);
+		httpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.valueOf("text/html;charset=UTF-8")));
+		handlerAdapter.setMessageConverters(Arrays.asList(httpMessageConverter));
+		return handlerAdapter;
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 静态资源的访问路径配置
+		registry.addResourceHandler("/resources/images/**").addResourceLocations("/resources/images/");
 	}
 	
 }
