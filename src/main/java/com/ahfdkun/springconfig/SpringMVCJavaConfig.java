@@ -14,14 +14,20 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.InternalResourceView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
@@ -55,6 +61,28 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
         return resolver;*/
     }
 	
+	/**
+	 * @param contentNegotiationManager
+	 * @return
+	 */
+	@Bean
+	public ViewResolver cnViewResolver(ContentNegotiationManager contentNegotiationManager) { // 内容协商视图
+		ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
+		viewResolver.setContentNegotiationManager(contentNegotiationManager);
+		viewResolver.setDefaultViews(Arrays.asList(new MappingJackson2JsonView()));
+        return viewResolver;
+    }
+	
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		configurer.defaultContentType(MediaType.TEXT_HTML);
+	}
+	
+	/*@Bean(name = "api/spittles")
+	public View spittles() { // 将"spittles"定义为JSON视图
+        return new MappingJackson2JsonView();
+    }*/
+
 	@Bean
 	public MultipartResolver multipartResolver() throws IOException { // multipart解析器
 		// 依赖于servlet3.0

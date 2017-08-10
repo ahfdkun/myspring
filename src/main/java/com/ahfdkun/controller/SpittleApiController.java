@@ -39,5 +39,4 @@ public class SpittleApiController {
 		return spittleRespository.findSpittles(max, count);
 	}
 	
-	
 }
