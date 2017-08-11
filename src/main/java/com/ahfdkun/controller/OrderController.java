@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ahfdkun.domain.Item;
 import com.ahfdkun.domain.Order;
 import com.ahfdkun.exception.web.SpittleNotFoundException;
-import com.ahfdkun.repository.impl.SpitterRepositoryImpl;
 import com.ahfdkun.repository.mongo.OrderRepository;
 
 @Controller
