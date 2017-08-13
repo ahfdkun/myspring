@@ -32,7 +32,7 @@ public class SpittleRepositoryImpl implements SpittleRespository {
 		return spittles;
 	}
 
-	//@Cacheable("spittleCache") // 只是当前实现类会生效Cache
+	// @Cacheable("spittleCache") // 只是当前实现类会生效Cache
 	// @RolesAllowed("ROLE_SPITTER") // 接口不生效
 	public Spittle findOne(long spittleId) {
 		return new Spittle("ahfdkun", new Date(), 100.0, 200.1);

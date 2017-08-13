@@ -65,18 +65,18 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 	 * @param contentNegotiationManager
 	 * @return
 	 */
-	@Bean
+	/*@Bean
 	public ViewResolver cnViewResolver(ContentNegotiationManager contentNegotiationManager) { // 内容协商视图
 		ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
 		viewResolver.setContentNegotiationManager(contentNegotiationManager);
 		viewResolver.setDefaultViews(Arrays.asList(new MappingJackson2JsonView()));
         return viewResolver;
-    }
+    }*/
 	
-	@Override
+	/*@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.defaultContentType(MediaType.TEXT_HTML);
-	}
+	}*/
 	
 	/*@Bean(name = "api/spittles")
 	public View spittles() { // 将"spittles"定义为JSON视图

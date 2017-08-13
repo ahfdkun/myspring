@@ -16,7 +16,7 @@ public interface SpittleRespository {
 
 	// @Secured("ROLE_SPITTER") // 接口方法生效
 	// @PreAuthorize("(hasRole('ROLE_SPITTER') and #spittleId == 2) or hasRole('ROLE_PREMIUM')") // 执行方法前校验
-	@PostAuthorize("returnObject.message == principal.username") // 方法执行后校验
+	// @PostAuthorize("returnObject.message == principal.username") // 方法执行后校验
 	Spittle findOne(long spittleId);
 
 	Spittle save(Spittle spittle);
