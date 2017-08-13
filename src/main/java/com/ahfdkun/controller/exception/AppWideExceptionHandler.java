@@ -40,4 +40,5 @@ public class AppWideExceptionHandler {
 		long spittleId = e.getSpittleId();
 		return new Error(4, "Spittle [" + spittleId + "] not found");
 	}
+	
 }
