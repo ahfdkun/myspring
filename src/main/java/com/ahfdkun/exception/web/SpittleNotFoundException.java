@@ -15,4 +15,21 @@ public class SpittleNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = -7554010466825576531L;
 
+	private long spittleId;
+
+	public SpittleNotFoundException() {
+	}
+
+	public SpittleNotFoundException(long spittleId) {
+		this.spittleId = spittleId;
+	}
+
+	public long getSpittleId() {
+		return spittleId;
+	}
+
+	public void setSpittleId(long spittleId) {
+		this.spittleId = spittleId;
+	}
+
 }
