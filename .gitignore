@@ -1,5 +1,5 @@
 /target/
 /.springBeans
-*.classpath
 /.project
 /.settings/
+/.classpath
