@@ -44,8 +44,7 @@ public class SpringJmsConfig {
 	public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
 		JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
 		jmsTemplate.setDefaultDestinationName("spittle.queue"); // 设置默认目的地
-		// jmsTemplate.setMessageConverter(new
-		// MappingJackson2MessageConverter());
+		// jmsTemplate.setMessageConverter(new MappingJackson2MessageConverter());
 		return jmsTemplate;
 	}
 
