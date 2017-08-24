@@ -8,7 +8,10 @@ import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
+import org.springframework.jms.listener.adapter.MessageListenerAdapter;
+
+import com.ahfdkun.service.SpittleAlertHandler;
 
 /**
  * @Description Spring中使用JMS
@@ -41,9 +44,24 @@ public class SpringJmsConfig {
 	public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
 		JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
 		jmsTemplate.setDefaultDestinationName("spittle.queue"); // 设置默认目的地
-//		jmsTemplate.setMessageConverter(new MappingJackson2MessageConverter());
+		// jmsTemplate.setMessageConverter(new
+		// MappingJackson2MessageConverter());
 		return jmsTemplate;
 	}
+
+	@Bean
+	public MessageListenerAdapter messageListenerAdapter(SpittleAlertHandler spittleAlertHandler) { // 消息监听适配器
+		return new MessageListenerAdapter(spittleAlertHandler);
+	}
 	
-	
+	// 消息监听适配器对应的监听容器
+	@Bean
+	public DefaultMessageListenerContainer jmsListenerContainer(ConnectionFactory connectionFactory, ActiveMQQueue activeMQQueue, MessageListenerAdapter messageListenerAdapter) {
+		DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
+		dmlc.setConnectionFactory(connectionFactory);
+		dmlc.setDestination(activeMQQueue);
+		dmlc.setMessageListener(messageListenerAdapter);
+		return dmlc;
+	}
+
 }
