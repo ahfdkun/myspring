@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<html>
+<body>
+	WebSocket Client...
+</body>
+
+<script type="text/javascript">
+
+	var url = "ws://" + window.location.host + "/myspring/macro";
+	var sock = new WebSocket(url);
+	
+	sock.onopen = function() { // 处理连接开启事件
+		console.log('Opening');
+		sayMacro();
+	};
+	
+	sock.onmessage = function(e) { // 处理信息
+		console.log('Received message: '+ e.data);
+		setTimeout(function(){sayMacro();}, 2000);
+	};
+	
+	sock.onclose = function() { // 处理连接关闭事件
+		console.log('Closing');
+	};
+	
+	function sayMacro() { // 发送消息
+		console.log('Sending Macro!');
+		sock.send('Macro!');
+	}
+	
+</script>
+</html>
