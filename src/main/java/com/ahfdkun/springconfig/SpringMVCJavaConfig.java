@@ -145,7 +145,7 @@ public class SpringMVCJavaConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// 静态资源的访问路径配置
-		registry.addResourceHandler("/resources/images/**").addResourceLocations("/resources/images/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/*");
 	}
 	
 }

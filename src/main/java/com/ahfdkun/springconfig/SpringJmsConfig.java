@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.adapter.MessageListenerAdapter;
+import org.springframework.jms.remoting.JmsInvokerServiceExporter;
 
 import com.ahfdkun.service.SpittleAlertHandler;
 
@@ -48,19 +49,26 @@ public class SpringJmsConfig {
 		return jmsTemplate;
 	}
 
-	@Bean
+	/*@Bean
 	public MessageListenerAdapter messageListenerAdapter(SpittleAlertHandler spittleAlertHandler) { // 消息监听适配器
 		return new MessageListenerAdapter(spittleAlertHandler);
+	}*/
+	
+	@Bean
+	public MessageListenerAdapter messageListenerAdapter(JmsInvokerServiceExporter jmsInvokerServiceExporter) { // JMS监听器
+		MessageListenerAdapter messageListener = new MessageListenerAdapter(jmsInvokerServiceExporter);
+		messageListener.setDefaultListenerMethod("getSpitter");
+		return messageListener;
 	}
 	
 	// 消息监听适配器对应的监听容器
-	@Bean
+	/*@Bean
 	public DefaultMessageListenerContainer jmsListenerContainer(ConnectionFactory connectionFactory, ActiveMQQueue activeMQQueue, MessageListenerAdapter messageListenerAdapter) {
 		DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
 		dmlc.setConnectionFactory(connectionFactory);
 		dmlc.setDestination(activeMQQueue);
 		dmlc.setMessageListener(messageListenerAdapter);
 		return dmlc;
-	}
+	}*/
 
 }
