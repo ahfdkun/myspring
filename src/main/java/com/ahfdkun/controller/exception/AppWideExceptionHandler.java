@@ -2,6 +2,7 @@ package com.ahfdkun.controller.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,6 +40,11 @@ public class AppWideExceptionHandler {
 	public Error spittleNotFound(SpittleNotFoundException e) {
 		long spittleId = e.getSpittleId();
 		return new Error(4, "Spittle [" + spittleId + "] not found");
+	}
+	
+	@MessageExceptionHandler // 处理消息异常
+	public void spittleNotFound(Throwable t) {
+		System.out.println("------Error handling message: " + t.getMessage());
 	}
 	
 }
