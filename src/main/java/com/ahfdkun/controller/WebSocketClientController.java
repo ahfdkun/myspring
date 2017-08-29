@@ -16,8 +16,11 @@ public class WebSocketClientController {
 	}
 
 	@MessageMapping("/macro")
-	public void handleShout(Shout incoming) { // 处理发往 "/app/macro" 目的地的消息
+	public Shout handleShout(Shout incoming) { // 处理发往 "/app/macro" 目的地的消息
 		System.out.println("Received message: " + incoming.getMessage());
+		Shout outing = new Shout();
+		outing.setMessage("Polo!");
+		return outing;
 	}
 	
 	@SubscribeMapping("/macro")

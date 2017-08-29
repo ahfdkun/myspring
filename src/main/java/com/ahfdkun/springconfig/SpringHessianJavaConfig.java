@@ -1,7 +1,5 @@
 package com.ahfdkun.springconfig;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
