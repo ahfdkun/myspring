@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	// 将MacroHandler映射到"/macro"
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(webSocketHandler(), "/macro").withSockJS();
+		registry.addHandler(webSocketHandler(), "/macro");
 	}
 
 }
