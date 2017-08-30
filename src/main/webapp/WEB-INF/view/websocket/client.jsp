@@ -15,10 +15,18 @@
 	
 	var payload = JSON.stringify({'message':'Macro!'});
 	
-	stomp.connect('guest', 'guest', function() {
-		stomp.send('/app/macro', {}, payload);
+	stomp.connect({}, function() {
+		/* stomp.send('/app/macro', {}, payload);
 		stomp.subscribe('/app/macro', function(greeting){  
-            console.log(JSON.parse(greeting.body).message);  
+            console.log("/app/macro: " + JSON.parse(greeting.body).message);  
+        });
+		stomp.subscribe('/topic/macro', function(greeting){  
+            console.log("/topic/macro: " + JSON.parse(greeting.body).message);  
+        }); */
+		
+		stomp.send('/app/spittle', {}, payload);
+		stomp.subscribe('/user/queue/notifications', function(greeting){  
+            console.log("/user/queue/notifications: " + JSON.parse(greeting.body).message);  
         });
 	});
 </script>

@@ -25,13 +25,15 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		// registry.enableSimpleBroker("/queue", "/topic"); // 启用简单的内存消息代理
-		/*registry.enableStompBrokerRelay("/queue", "/topic")
+		registry.enableStompBrokerRelay("/queue", "/topic")
 			.setRelayHost("localhost")
-			.setRelayPort(61616)
+			.setRelayPort(61613)
 			.setClientLogin("admin")
-			.setClientPasscode("admin");*/ // 使用STOMP代理代替内存代理
+			.setClientPasscode("123456")
+			.setSystemLogin("admin")
+			.setSystemPasscode("123456"); // 使用STOMP代理代替内存代理
 		
-		registry.enableStompBrokerRelay("/queue", "/topic");
+		// registry.enableStompBrokerRelay("/queue", "/topic");
 		registry.setApplicationDestinationPrefixes("/app"); // 所有"/app"开头的消息都会路由到带有@MessageMapping注解的方法中
 	}
 
