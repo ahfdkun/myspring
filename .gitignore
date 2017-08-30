@@ -2,4 +2,4 @@
 /.springBeans
 /.project
 /.settings/
-/.classpath
+*.classpath
