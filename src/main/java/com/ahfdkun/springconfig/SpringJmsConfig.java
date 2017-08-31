@@ -28,6 +28,8 @@ public class SpringJmsConfig {
 	public ActiveMQConnectionFactory activeMQConnectionFactory() { // 定义一个连接工厂
 		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
 		factory.setBrokerURL("tcp://localhost:61616");
+		factory.setUserName("admin");
+		factory.setPassword("123456");
 		return factory;
 	}
 
@@ -42,9 +44,10 @@ public class SpringJmsConfig {
 	}
 
 	@Bean
-	public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
+	public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory, ActiveMQQueue activeMQQueue) {
 		JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-		jmsTemplate.setDefaultDestinationName("spittle.queue"); // 设置默认目的地
+		// jmsTemplate.setDefaultDestinationName("spittle.queue"); // 设置默认目的地
+		jmsTemplate.setDefaultDestination(activeMQQueue);
 		// jmsTemplate.setMessageConverter(new MappingJackson2MessageConverter());
 		return jmsTemplate;
 	}
@@ -55,7 +58,7 @@ public class SpringJmsConfig {
 	}*/
 	
 	@Bean
-	public MessageListenerAdapter messageListenerAdapter(JmsInvokerServiceExporter jmsInvokerServiceExporter) { // JMS监听器
+	public MessageListenerAdapter messageListenerAdapter(JmsInvokerServiceExporter jmsInvokerServiceExporter) { // 消息RPC监听器
 		MessageListenerAdapter messageListener = new MessageListenerAdapter(jmsInvokerServiceExporter);
 		messageListener.setDefaultListenerMethod("getSpitter");
 		return messageListener;
