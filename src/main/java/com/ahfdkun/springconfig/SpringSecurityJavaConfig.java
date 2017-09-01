@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -31,7 +33,7 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
 	public static Logger log = Logger.getLogger(SpringSecurityJavaConfig.class);
 	
-	/*@Autowired*/
+	@Autowired
 	DataSource dataSource;
 	
 	@Autowired
@@ -76,13 +78,26 @@ public class SpringSecurityJavaConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.csrf().disable() // 禁用csrf
 		.formLogin().loginPage("/login") // 登录
-		.and().rememberMe().tokenValiditySeconds(300).key("spittrKey") // 记住我
-		.and().logout().logoutSuccessUrl("/").logoutUrl("/signout"); // 退出
+		.and().rememberMe().tokenValiditySeconds(3000).key("spittrKey") // 记住我
+		.and().logout().logoutSuccessUrl("/").logoutUrl("/signout") // 退出
+		.and().sessionManagement().maximumSessions(-1).maxSessionsPreventsLogin(true).sessionRegistry(sessionRegistry());
 //		.and()
 //		.httpBasic().realmName("Spittr"); // Http Basic 
 	
 	}
 	
+	/*@Bean
+	public JdbcUserDetailsManager jdbcUserDetailsManager() {
+		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+		jdbcUserDetailsManager.setDataSource(dataSource);
+		return jdbcUserDetailsManager;
+	}*/
+	
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
+
 	// 设置SpringSecurity乱码问题
 	private void addEncodingFilter(HttpSecurity http) {
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
