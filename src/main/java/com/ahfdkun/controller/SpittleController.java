@@ -19,10 +19,22 @@ import com.ahfdkun.constant.SpittleConstant;
 import com.ahfdkun.domain.Spittle;
 import com.ahfdkun.exception.web.SpittleNotFoundException;
 import com.ahfdkun.repository.SpittleRespository;
+import com.ahfdkun.service.SpittleControllerManagedOperations;
 
 @Controller
 @RequestMapping("/spittles")
-public class SpittleController {
+public class SpittleController implements SpittleControllerManagedOperations {
+
+	public static final int DEFAULT_SPITTLES_PER_SIZE = 10;
+	private int spittlesPerPage = DEFAULT_SPITTLES_PER_SIZE;
+	
+	public int getSpittlesPerPage() {
+		return spittlesPerPage;
+	}
+
+	public void setSpittlesPerPage(int spittlesPerPage) {
+		this.spittlesPerPage = spittlesPerPage;
+	}
 
 	private final SpittleRespository spittleRespository;
 	
@@ -42,7 +54,7 @@ public class SpittleController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = SpittleConstant.MAX_LONG_AS_STRING) long max,
 			@RequestParam(value = "count", defaultValue = "20") int count) {
-		return spittleRespository.findSpittles(max, count);
+		return spittleRespository.findSpittles(max, spittlesPerPage);
 	}
 	
 	/*@RequestMapping(value="/show", method = RequestMethod.GET)

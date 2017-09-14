@@ -11,7 +11,7 @@ import com.ahfdkun.domain.Spittle;
 
 public interface SpittleRespository {
 
-	@PostFilter("filterObject.message == 'Spittle 2'") // 过滤返回结果集
+	// @PostFilter("filterObject.message == 'Spittle 2'") // 过滤返回结果集
 	List<Spittle> findSpittles(long max, int count);
 
 	// @Secured("ROLE_SPITTER") // 接口方法生效
